@@ -15,4 +15,14 @@ class Sample extends BaseController
 	{
 		return "run method";
 	}
+	
+	public function param($name): string
+	{
+		return "param name is " . $name;
+	}
+
+	public function param2($name, $age): string
+	{
+		return "param name is $name. age is $age";
+	}
 }
