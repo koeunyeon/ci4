@@ -25,4 +25,9 @@ class Sample extends BaseController
 	{
 		return "param name is $name. age is $age";
 	}
+	
+	public function defaultparam($name = 'codeigniter 4'): string
+	{
+		return "default param name is " . $name;
+	}
 }
