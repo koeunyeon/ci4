@@ -35,4 +35,10 @@ class Sample extends BaseController
 	{
 		return view("/showView");
 	}
+	
+	public function viewdata(): string
+	{
+		$data = ['name' => 'ci4', 'age' => 20];
+		return view("/viewData.php", $data);
+	}
 }
