@@ -30,4 +30,9 @@ class Sample extends BaseController
 	{
 		return "default param name is " . $name;
 	}
+	
+	public function showview(): string
+	{
+		return view("/showView");
+	}
 }
