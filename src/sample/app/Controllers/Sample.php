@@ -41,4 +41,15 @@ class Sample extends BaseController
 		$data = ['name' => 'ci4', 'age' => 20];
 		return view("/viewData.php", $data);
 	}
+	
+	public function postform(): string
+	{
+		return View("/postForm");
+	}	
+	
+	public function postinput(): void
+	{
+		$input_data = $this->request->getPost();
+		var_export($input_data);
+	}
 }
