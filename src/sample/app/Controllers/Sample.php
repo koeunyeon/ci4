@@ -80,4 +80,16 @@ class Sample extends BaseController
 		$session->remove('member_id');
 		return "세션값이 삭제되었습니다.";
 	}
+	
+	public function json_response(): \CodeIgniter\HTTP\Response 
+	{
+		$data = [
+			'name' => "ci4",
+			'type' => "json",
+			'age' => "20"
+		];
+
+		$response = $this->response->setJSON($data);
+		return $response;
+	}
 }
