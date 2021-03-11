@@ -92,4 +92,35 @@ class Sample extends BaseController
 		$response = $this->response->setJSON($data);
 		return $response;
 	}
+	public function valid(){
+		$input = $this->validate([
+			"name" => [
+				'rules' => 'required|min_length[4]|max_length[10]',
+				'errors' => [
+					'required' => '이름이 필요합니다',
+					'min_length' => '이름은 최소 4글자 이상입니다.',
+					'max_length' => '이름은 최대 10글자 이하입니다.'
+				]
+			],
+			"age" => [
+				'rules' => 'required|is_natural|less_than[150]',
+				'errors' => [
+					'required' => '필수값입니다',
+					'is_natural' => "나이는 자연수여야 합니다.",
+					'less_than' => "정말 150세 이상이신가요?"
+				]
+			]
+		]);
+
+		if ($input){
+			return $this->response->setJSON("성공했습니다.");
+		}else{
+			$errors = $this->validator->getErrors();
+			return
+				$this
+				->response
+				->setStatusCode(400, "bad parameter")
+				->setJSON($errors);
+		}
+	}
 }
