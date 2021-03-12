@@ -123,4 +123,9 @@ class Sample extends BaseController
 				->setJSON($errors);
 		}
 	}
+	
+	public function redirect()
+	{
+		$this->response->redirect("/");
+	}
 }
