@@ -58,4 +58,40 @@ class Model extends BaseController
 		$data = $sampleModel->find(1);
 		return $this->response->setJSON($data);
 	}
+	
+	public function update()
+	{
+		$sampleModel = new SampleModel();
+		$sampleModel->update(1, ['name' => 'update']);
+
+		return $this->response->setJSON($sampleModel->find(1));
+
+	}
+
+	public function save()
+	{
+		$sampleModel = new SampleModel();
+		$sample_data = $sampleModel->find(1);
+		$sample_data['name'] = "save";
+		$sampleModel->save($sample_data);
+		return $this->response->setJSON($sampleModel->find(1));
+	}
+
+	public function qbupdate()
+	{
+		$sampleModel = new SampleModel();
+		$sampleModel
+			->where("sample_id", 1)
+			->set(['name' => 'qbupdate'])
+			->update();
+
+		return $this->response->setJSON($sampleModel->where('sample_id', 1)->first());
+	}
+	
+	public function delete()
+	{
+		$sampleModel = new SampleModel();
+		$sampleModel->delete(1);
+		return $this->response->setJSON($sampleModel->find(1));
+	}
 }
