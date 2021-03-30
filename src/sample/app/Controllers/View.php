@@ -4,6 +4,8 @@
 namespace App\Controllers;
 
 
+use phpDocumentor\Reflection\Types\String_;
+
 class View extends BaseController
 {
     public function li()
@@ -58,7 +60,7 @@ class View extends BaseController
             ]
         );
     }
-	
+
     public function selectoption(): string
     {
         $sports_data = [
@@ -75,8 +77,8 @@ class View extends BaseController
                 "selected" => $selected
             ]
         );
-    }	
-	
+    }
+
     public function text(): string
     {
         $age = $this->request->getPost("age") ?? "";
@@ -91,121 +93,156 @@ class View extends BaseController
         return View("/view/pw", ['input_pw' => $input_pw]);
     }
 
-    public function textarea(): String
-	{
-		$input = $this->request->getPost("input") ?? "";
+    public function hidden(): string
+    {
+        $input = $this->request->getPost("input") ?? "";
 
-		return View("/view/textarea", ['input'=>$input]);
-	}
+        return View("/view/hidden", ['input' => $input]);
+    }
+
+    public function textarea(): string
+    {
+        $input = $this->request->getPost("input") ?? "";
+
+        return View("/view/textarea", ['input' => $input]);
+    }
 
     public function table(): string
-	{
-		$table_data = [
-			["name" => "코드이그나이터", "age" => 10, "gender" => "male"],
-			["name" => "라라벨", "age" => 25, "gender" => "female"],
-			["name" => "스프링", "age" => 76, "gender" => "unknown"],
-		];
+    {
+        $table_data = [
+            ["name" => "코드이그나이터", "age" => 10, "gender" => "male"],
+            ["name" => "라라벨", "age" => 25, "gender" => "female"],
+            ["name" => "스프링", "age" => 76, "gender" => "unknown"],
+        ];
 
-		return View("/view/table", ['table_data' => $table_data]);
-	}
+        return View("/view/table", ['table_data' => $table_data]);
+    }
 
-	public function link(): string
-	{
-		$link_data = [
-			['url' => 'https://koeunyeon.github.io', 'message' => '고은연 github', 'is_new_tab' => true],
-			['url' => 'https://github.com', 'message' => '깃헙', 'is_new_tab' => false],
-			['url' => 'https://velog.io/@koeunyeon', 'message' => '고은연 블로그', 'is_new_tab' => true],        
-			['url' => 'http://ci4doc.cikorea.net/', 'message' => '코드이그나이터4 한글 메뉴얼', 'is_new_tab' => true]
-		];
+    public function link(): string
+    {
+        $link_data = [
+            ['url' => 'https://koeunyeon.github.io', 'message' => '고은연 블로그', 'is_new_tab' => true],
+            ['url' => 'https://github.com', 'message' => '깃헙', 'is_new_tab' => false],
+            ['url' => 'http://ci4doc.cikorea.net/', 'message' => '코드이그나이터4 한글 메뉴얼', 'is_new_tab' => true]
+        ];
 
-		return View("/view/link", ['link_data' => $link_data]);
-	}
+        return View("/view/link", ['link_data' => $link_data]);
+    }
 
-	public function upload(): string
-	{
-		$file = $this->request->getFile("single_file");
+    public function image(): string
+    {
+        $data = [
+            ['src' => 'http://codeigniter.com/assets/images/ci-logo-big.png', 'alt' => 'codeigniter4', 'width' => '200px', 'height' => '200px'],
+            ['src' => base_url('/images/php-logo.svg'), 'alt' => 'PHP', 'width' => '300px', 'height' => '100px'],
+        ];
 
-		$fileInfo = [];
-		if ($file != null) {
-			if (!$file->isValid()) {
-				$errorString = $file->getErrorString();
-				$errorCode = $file->getError();
+        return View("/view/image", ['data' => $data]);
+    }
 
-				$fileInfo['hasError'] = true;
-				$fileInfo['errorString'] = $errorString;
-				$fileInfo['errorCode'] = $errorCode;
+    private function file_upload($file)
+    {
 
-			} else {
-				$fileInfo['hasError'] = false;
-				if ($file->hasMoved() === false) {
-					$fileInfo['mimeType'] = $file->getMimeType();
+    }
 
-					$savedPath = $file->store();
+    public function upload(): string
+    {
+        $file = $this->request->getFile("single_file");
 
-					$fileInfo['savedPath'] = $savedPath;
-					$fileInfo['clientName'] = $file->getClientName();
-					$fileInfo['name'] = $file->getName();
-					$fileInfo['clientMimeType'] = $file->getClientMimeType();
-					$fileInfo['clientExtention'] = $file->getClientExtension();
-					$fileInfo['guessExtention'] = $file->guessExtension();
-				}
-			}
-		}
+        $fileInfo = [];
+        if ($file != null) {
+            if (!$file->isValid()) {
+                $errorString = $file->getErrorString();
+                $errorCode = $file->getError();
+                $fileInfo['hasError'] = true;
+                $fileInfo['errorString'] = $errorString;
+                $fileInfo['errorCode'] = $errorCode;
 
-		return View("/view/upload", [
-			'fileInfo' => $fileInfo
+            } else {
+                $fileInfo['hasError'] = false;
+                if ($file->hasMoved() === false) {
+                    // mimeType은 `store` 전에.
+                    $fileInfo['mimeType'] = $file->getMimeType();
 
-	public function upload_multi(): string
-	{
-		$files = $this->request->getFileMultiple("files");
+                    $savedPath = $file->store();
 
-		if ($files == null) {
-			return View("/view/upload_multi", [
-				'file_info_array' => []
-			]);
-		}
+                    $fileInfo['savedPath'] = $savedPath;
+                    $fileInfo['clientName'] = $file->getClientName();
+                    $fileInfo['name'] = $file->getName();
+                    $fileInfo['clientMimeType'] = $file->getClientMimeType();
+                    $fileInfo['clientExtention'] = $file->getClientExtension();
+                    $fileInfo['guessExtention'] = $file->guessExtension();
+                }
+            }
+        }
 
-		$file_info_array = [];
+        return View("/view/upload", [
+            'fileInfo' => $fileInfo
+        ]);
+    }
 
-		foreach ($files as $file) {
-			$fileInfo = [];
-			if ($file != null) {
-				if (!$file->isValid()) {
-					$errorString = $file->getErrorString();
-					$errorCode = $file->getError();
-					$fileInfo['hasError'] = true;
-					$fileInfo['errorString'] = $errorString;
-					$fileInfo['errorCode'] = $errorCode;
+    public function upload_multi(): string
+    {
+        $files = $this->request->getFileMultiple("files");
 
-				} else {
-					$fileInfo['hasError'] = false;
-					if ($file->hasMoved() === false) {                    
-						$fileInfo['mimeType'] = $file->getMimeType();
+        if ($files == null) {
+            return View("/view/upload_multi", [
+                'file_info_array' => []
+            ]);
+        }
 
-						$savedPath = $file->store();
+        $file_info_array = [];
 
-						$fileInfo['savedPath'] = $savedPath;
-						$fileInfo['clientName'] = $file->getClientName();
-						$fileInfo['name'] = $file->getName();
-						$fileInfo['clientMimeType'] = $file->getClientMimeType();
-						$fileInfo['clientExtention'] = $file->getClientExtension();
-						$fileInfo['guessExtention'] = $file->guessExtension();
-					}
-				}
-			}
+        foreach ($files as $file) {
+            $fileInfo = [];
+            if ($file != null) {
+                if (!$file->isValid()) {
+                    $errorString = $file->getErrorString();
+                    $errorCode = $file->getError();
+                    $fileInfo['hasError'] = true;
+                    $fileInfo['errorString'] = $errorString;
+                    $fileInfo['errorCode'] = $errorCode;
 
-			array_push($file_info_array, $fileInfo);
-		}
+                } else {
+                    $fileInfo['hasError'] = false;
+                    if ($file->hasMoved() === false) {
+                        // mimeType은 `store` 전에.
+                        $fileInfo['mimeType'] = $file->getMimeType();
 
-		return View("/view/upload_multi", [
-			'file_info_array' => $file_info_array
-		]);
-	}    
+                        $savedPath = $file->store();
+
+                        $fileInfo['savedPath'] = $savedPath;
+                        $fileInfo['clientName'] = $file->getClientName();
+                        $fileInfo['name'] = $file->getName();
+                        $fileInfo['clientMimeType'] = $file->getClientMimeType();
+                        $fileInfo['clientExtention'] = $file->getClientExtension();
+                        $fileInfo['guessExtention'] = $file->guessExtension();
+                    }
+                }
+            }
+
+            array_push($file_info_array, $fileInfo);
+        }
+
+        return View("/view/upload_multi", [
+            'file_info_array' => $file_info_array
+        ]);
+    }
+
+    public function viewif()
+    {
+        $now = time();
+        $is_even = $now % 2;
+        return View("/view/viewif", [
+            'now' => $now,
+            'is_even' => $is_even,
+        ]);
+    }
+
     public function layout()
-	{
-		$hello = "안녕하세요";
-		return view("/view/layout_content.php", [
-			'hello' => $hello
-		]);
-	}
+    {
+        $hello = "안녕하세요";
+        return view("/view/layout_content.php", [
+            'hello' => $hello
+        ]);
+    }
 }
