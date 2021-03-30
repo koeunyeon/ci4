@@ -6,7 +6,6 @@ namespace App\Controllers;
 
 class View extends BaseController
 {
-<<<<<<< HEAD
     public function li()
     {
         $alphabet = range(65, 90);
@@ -109,7 +108,7 @@ class View extends BaseController
 
 		return View("/view/table", ['table_data' => $table_data]);
 	}
-=======
+
 	public function link(): string
 	{
 		$link_data = [
@@ -121,6 +120,4 @@ class View extends BaseController
 
 		return View("/view/link", ['link_data' => $link_data]);
 	}
-    
->>>>>>> view-link
 }
