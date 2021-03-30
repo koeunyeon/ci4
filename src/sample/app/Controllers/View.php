@@ -201,4 +201,11 @@ class View extends BaseController
 			'file_info_array' => $file_info_array
 		]);
 	}    
+    public function layout()
+	{
+		$hello = "안녕하세요";
+		return view("/view/layout_content.php", [
+			'hello' => $hello
+		]);
+	}
 }
