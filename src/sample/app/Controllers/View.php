@@ -58,4 +58,22 @@ class View extends BaseController
             ]
         );
     }
+	
+    public function selectoption(): string
+    {
+        $sports_data = [
+            "baseball" => "야구",
+            "soccer" => "축구",
+            "basketball" => "농구",
+        ];
+
+        $selected = $this->request->getPost("sports") ?? "baseball";
+
+        return View("/view/selectoption",
+            [
+                "sports_data" => $sports_data,
+                "selected" => $selected
+            ]
+        );
+    }	
 }
