@@ -90,4 +90,11 @@ class View extends BaseController
 
         return View("/view/pw", ['input_pw' => $input_pw]);
     }
+
+    public function textarea(): String
+	{
+		$input = $this->request->getPost("input") ?? "";
+
+		return View("/view/textarea", ['input'=>$input]);
+	}
 }
