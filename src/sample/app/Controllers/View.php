@@ -6,7 +6,6 @@ namespace App\Controllers;
 
 class View extends BaseController
 {
-<<<<<<< HEAD
 	public function li()
 	{
 		$alphabet = range(65, 90);
@@ -18,8 +17,7 @@ class View extends BaseController
 
 		return View("/view/li", ['alphabet'=>$alphabet]);
 	}
-    
-=======
+
    public function checkbox()
 	{    
 		$sports_data = [
@@ -42,5 +40,4 @@ class View extends BaseController
 			]
 		);
 	} 
->>>>>>> view-checkbox
 }
