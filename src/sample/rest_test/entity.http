@@ -1,0 +1,5 @@
+# regist
+POST http://localhost:8080/entity/regist
+Content-Type: application/x-www-form-urlencoded
+
+name=ci4user&age=10&login_pw=asdf
