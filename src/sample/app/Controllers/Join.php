@@ -8,10 +8,10 @@ class Join extends BaseController
     {
         $parentModel = new SampleParentModel();
         $all_result = $parentModel
-            ->join("sample_child", "sample_parent.sample_parent_id = sample_child.sample_parent_id") // (1)
-            ->orderBy("sample_parent.parent_name") // (2)
+            ->join("sample_child", "sample_parent.sample_parent_id = sample_child.sample_parent_id")
+            ->orderBy("sample_parent.parent_name")
             ->findAll();
 
-        return view("join", ['all_result' => $all_result]); // (3)
+        return view("join", ['all_result' => $all_result]);
     }
 }

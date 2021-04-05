@@ -10,17 +10,17 @@ class RelationSeeder extends Seeder
    public function run()
    {
         // 임의 데이터 세팅
-        foreach (range(1,5) as $parent_idx) { // (1)
-            $sampleParentFabricator = new Fabricator(SampleParentModel::class); // (2)
-            $parent = $sampleParentFabricator->makeArray(); // (3)
+        foreach (range(1,5) as $parent_idx) {
+            $sampleParentFabricator = new Fabricator(SampleParentModel::class);
+            $parent = $sampleParentFabricator->makeArray();
             $sampleParentModel = new SampleParentModel();
-            $parent_id = $sampleParentModel->insert($parent); // (4)
+            $parent_id = $sampleParentModel->insert($parent);
 
 
-            foreach (range(1,random_int(3,8)) as $parent_idx) { // (5)
-                $sampleChildFabricator = new Fabricator(SampleChildModel::class); // (6)
+            foreach (range(1,random_int(3,8)) as $parent_idx) {
+                $sampleChildFabricator = new Fabricator(SampleChildModel::class);
                 $child = $sampleChildFabricator->makeArray();
-                $child['sample_parent_id'] = $parent_id; // (7)
+                $child['sample_parent_id'] = $parent_id;
                 $sampleChildModel = new SampleChildModel();
                 $sampleChildModel->insert($child);
             }
