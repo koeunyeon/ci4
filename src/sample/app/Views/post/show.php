@@ -9,6 +9,6 @@
 </header>
 
 <div class="blog-post-body">
-    <?= nl2br(esc($post['content'])) ?>
+    <?= $post['html_content'] ?>
 </div><!--//blog-comments-section-->
 <?= $this->endSection() ?>
