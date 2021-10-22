@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class PostsModel extends Model
 {
     protected $table = 'posts';
-    protected $allowedFields = ['title', 'content', 'author'];
+    protected $allowedFields = ['title', 'content', 'author', 'html_content'];
     protected $primaryKey = "post_id";
 
     protected $useSoftDeletes = true;
