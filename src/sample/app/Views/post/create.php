@@ -1,14 +1,21 @@
-<h1>글쓰기</h1>
+<?= $this->extend('/post/layout') ?>
+<?= $this->section('content') ?>
+
+
+<h2 class="title mb-2">글쓰기</h2>
 <form method="POST">
-    <p>
-    <h3>제목</h3>
-    <input type="text" name="title" value="<?= $post_data['title'] ?? "" ?>" />
+    <div class="form-group"> <!-- (1) -->
+        <label for="title">제목을 알려주세요</label>  <!-- (2) -->
+        <input type="text" class="form-control" id="title" name="title" value="<?= $post_data['title'] ?? "" ?>" placeholder="제목" required />  <!-- (3) -->
+        <small id="titlehelp" class="form-text text-muted">제목은 4-100글자 사이입니다.</small>  <!-- (4) -->
+    </div>
+    <div class="form-group">
+        <label for="content">내용을 입력하세요</label>
+        <textarea name="content" class="form-control" id="content" rows="10" required><?= $post_data['content'] ?? "" ?></textarea>  <!-- (5) -->
+    </div>
+    <p style="text-align: right;">  <!-- (6) -->
+        <input type="submit" class="btn btn-primary" value="저장">  <!-- (7) -->
     </p>
-    <p>
-    <h3>내용</h3>
-    <textarea name="content"><?= $post_data['content'] ?? "" ?></textarea>
-    </p>
-    <p><input type="submit" value="저장"></p>
     <?php
     if (isset($errors)) {
         echo "<ul>";
@@ -19,3 +26,5 @@
     }
     ?>
 </form>
+
+<?= $this->endSection() ?>
