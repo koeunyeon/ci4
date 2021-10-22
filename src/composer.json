@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "fakerphp/faker": "^1.14"
+    },
+    "require": {
+        "michelf/php-markdown": "^1.9"
     }
 }

@@ -15,6 +15,10 @@ class ComposerStaticInit80184bf6c23104f9b8f87a69be00c206
         array (
             'Psr\\Container\\' => 14,
         ),
+        'M' => 
+        array (
+            'Michelf\\' => 8,
+        ),
         'F' => 
         array (
             'Faker\\' => 6,
@@ -25,6 +29,10 @@ class ComposerStaticInit80184bf6c23104f9b8f87a69be00c206
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Michelf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/michelf/php-markdown/Michelf',
         ),
         'Faker\\' => 
         array (

@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '6691804b33b51eb0c2a70429d2916e56c308da25',
+    'reference' => '988cdcc708cd3fd2e81830628a56a725fd0daf3a',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '6691804b33b51eb0c2a70429d2916e56c308da25',
+      'reference' => '988cdcc708cd3fd2e81830628a56a725fd0daf3a',
     ),
     'fakerphp/faker' => 
     array (
@@ -28,6 +28,15 @@
       array (
       ),
       'reference' => 'ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1',
+    ),
+    'michelf/php-markdown' => 
+    array (
+      'pretty_version' => '1.9.0',
+      'version' => '1.9.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c83178d49e372ca967d1a8c77ae4e051b3a3c75c',
     ),
     'psr/container' => 
     array (
