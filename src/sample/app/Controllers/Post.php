@@ -5,10 +5,12 @@ use CodeIgniter\Controller;
 
 use App\Models\PostsModel;
 
+use Michelf\Markdown;
+
 class Post extends Controller
 {
 	// $content가 있다면 마크다운으로 변환한 데이터도 함께 배열에 담는다.
-	private function add_input_markdown(){
+	private function add_input_markdown(){		
 		$data = $this->request->getPost();
 		if (array_key_exists("content", $data)){
 			$content = $data['content'];
@@ -26,8 +28,10 @@ class Post extends Controller
 			return view("/post/create");
 		}
 		
-		$model = new PostsModel();
-		$post_id = $model->insert($this->request->getPost());
+		$model = new PostsModel();		
+		// $post_id = $model->insert($this->request->getPost());
+		$data = $this->add_input_markdown();
+		$post_id = $model->insert($data);
 		if ($post_id) {  // 모델에서 유효성 검사를 통과할 경우
 			$this->response->redirect("/post/show/$post_id");
 		} else { // 모델에서 유효성 검사가 실패하는 경우
@@ -66,7 +70,10 @@ class Post extends Controller
 			]);
 		}
 
-		$isSuccess = $model->update($post_id, $this->request->getPost());
+		// $isSuccess = $model->update($post_id, $this->request->getPost());
+		$data = $this->add_input_markdown();
+		$isSuccess = $model->update($post_id, $data);
+		
 		if ($isSuccess){
 			$this->response->redirect("/post/show/$post_id");
 		}else{
