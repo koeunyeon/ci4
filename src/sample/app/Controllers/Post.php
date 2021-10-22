@@ -7,6 +7,18 @@ use App\Models\PostsModel;
 
 class Post extends Controller
 {
+	// $content가 있다면 마크다운으로 변환한 데이터도 함께 배열에 담는다.
+	private function add_input_markdown(){
+		$data = $this->request->getPost();
+		if (array_key_exists("content", $data)){
+			$content = $data['content'];
+			$content = str_replace(PHP_EOL, "  " . PHP_EOL, $content);
+			$data['html_content'] = Markdown ::defaultTransform($content);
+		}
+
+		return $data;
+	}
+
     // 생성
     public function create()
 	{
