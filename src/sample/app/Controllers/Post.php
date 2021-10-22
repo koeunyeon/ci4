@@ -16,9 +16,9 @@ class Post extends Controller
 		
 		$model = new PostsModel();
 		$post_id = $model->insert($this->request->getPost());
-		if ($post_id) {
+		if ($post_id) {  // 모델에서 유효성 검사를 통과할 경우
 			$this->response->redirect("/post/show/$post_id");
-		} else {
+		} else { // 모델에서 유효성 검사가 실패하는 경우
 			return view("/post/create", [
 				'post_data' => $this->request->getPost(),
 				'errors' => $model->errors()
@@ -54,9 +54,15 @@ class Post extends Controller
 			]);
 		}
 
-		$model->update($post_id, $this->request->getPost());
-
-		$this->response->redirect("/post/show/$post_id");
+		$isSuccess = $model->update($post_id, $this->request->getPost());
+		if ($isSuccess){
+			$this->response->redirect("/post/show/$post_id");
+		}else{
+			return view("/post/create", [
+				'post_data' => $this->request->getPost(),
+				'errors' => $model->errors()
+			]);
+		}
 	}
 
     // 삭제
