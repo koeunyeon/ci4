@@ -15,6 +15,7 @@
     </div>
     <p style="text-align: right;">  <!-- (6) -->
         <input type="submit" class="btn btn-primary" value="저장">  <!-- (7) -->
+        <a href="/post/" class="btn btn-info">취소</a>
     </p>
     <?php
     if (isset($errors)) {

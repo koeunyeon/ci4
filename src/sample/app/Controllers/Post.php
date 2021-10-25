@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\helpers\LoginHelper;
 use CodeIgniter\Controller;
 
 use App\Models\PostsModel;
@@ -24,13 +25,18 @@ class Post extends Controller
     // 생성
     public function create()
 	{
+		if (LoginHelper::isLogin() === false) { // (1)
+			return $this->response->redirect("/post");
+		}
+		
 		if ($this->request->getMethod() === "get") {
 			return view("/post/create");
 		}
 		
 		$model = new PostsModel();		
 		// $post_id = $model->insert($this->request->getPost());
-		$data = $this->add_input_markdown();
+		$data = $this->add_input_markdown(); // (1)
+		$data['author'] = LoginHelper::memberId(); // (2)
 		$post_id = $model->insert($data);
 		if ($post_id) {  // 모델에서 유효성 검사를 통과할 경우
 			$this->response->redirect("/post/show/$post_id");
@@ -50,17 +56,27 @@ class Post extends Controller
 			return $this->response->redirect("/post");
 		}
 
+		$isAuthor = LoginHelper::isLogin() && $post['author'] == LoginHelper::memberId();
 		return view('/post/show',[
-			'post' => $post
+			'post' => $post,
+			'isAuthor' => $isAuthor
 		]);
     }   
 
     // 수정
     public function edit($post_id)
 	{
+		if (LoginHelper::isLogin() === false) { // (1)
+			return $this->response->redirect("/post");
+		}
+
 		$model = new PostsModel();
 		$post = $model->find($post_id);
 		if (!$post) {
+			return $this->response->redirect("/post");
+		}
+
+		if ($post['author'] !== LoginHelper::memberId()){ // (1)
 			return $this->response->redirect("/post");
 		}
 
@@ -87,6 +103,10 @@ class Post extends Controller
     // 삭제
 public function delete()
 	{
+		if (LoginHelper::isLogin() === false) { // (1)
+			return $this->response->redirect("/post");
+		}
+
 		if ($this->request->getMethod() !== "post"){
 			return $this->response->redirect("/post");
 		}
@@ -95,6 +115,10 @@ public function delete()
 		$model = new PostsModel();
 		$post = $model->find($post_id);
 		if (!$post) {
+			return $this->response->redirect("/post");
+		}
+
+		if ($post['author'] !== LoginHelper::memberId()){
 			return $this->response->redirect("/post");
 		}
 
@@ -112,7 +136,8 @@ public function delete()
 	
 		return view("post/index", [
 			'post_list' => $post_list,
-			'pager' => $pager
+			'pager' => $pager,
+			'isLogin' => LoginHelper::isLogin()
 		]);
     }
 
