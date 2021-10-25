@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4874f750d38f669b6d631698e04640241a846fb1',
+    'reference' => 'b99cc7897a1bd2a14aae887e69f9079f5ade96b8',
     'name' => 'codeigniter4/appstarter',
   ),
   'versions' => 
@@ -42,7 +42,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4874f750d38f669b6d631698e04640241a846fb1',
+      'reference' => 'b99cc7897a1bd2a14aae887e69f9079f5ade96b8',
     ),
     'codeigniter4/framework' => 
     array (
@@ -70,6 +70,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'ab3f5364d01f2c2c16113442fb987d26e4004913',
+    ),
+    'hybridauth/hybridauth' => 
+    array (
+      'pretty_version' => '3.7.1',
+      'version' => '3.7.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '0ec1b8cb8b230aae739422c5e42bc5733b3a7316',
     ),
     'kint-php/kint' => 
     array (

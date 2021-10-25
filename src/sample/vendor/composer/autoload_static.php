@@ -50,6 +50,10 @@ class ComposerStaticInitd0bb716ad8e391e3122d6184b34eb7f3
         array (
             'Kint\\' => 5,
         ),
+        'H' => 
+        array (
+            'Hybridauth\\' => 11,
+        ),
         'F' => 
         array (
             'Faker\\' => 6,
@@ -116,6 +120,10 @@ class ComposerStaticInitd0bb716ad8e391e3122d6184b34eb7f3
         'Kint\\' => 
         array (
             0 => __DIR__ . '/..' . '/kint-php/kint/src',
+        ),
+        'Hybridauth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hybridauth/hybridauth/src',
         ),
         'Faker\\' => 
         array (
