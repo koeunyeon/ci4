@@ -65,6 +65,6 @@ class PostTests extends FeatureTestCase // (1)
         $postModel = new PostsModel();
         $created_post = $postModel->find($post_id);
         $this->assertNotNull($created_post);
-        $this->assertStringContainsString("제목입니다", $created_post['title']); // (18)
+        $this->assertStringContainsString("제목입니다", $created_post->title);
     }
 }
