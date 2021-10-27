@@ -25,7 +25,7 @@ class PostService  // (1)
 
     public function find($post_id){
         $postModel = new PostsModel();
-        return $postModel->asObject("App\Entities\PostEntity")->find($post_id); // (1)
+        return $postModel->find($post_id); // (1)
     }
 
     public function isAuthor($post, $member_id){ // (1)
@@ -56,6 +56,16 @@ class PostService  // (1)
         $postModel->delete($post->post_id);
 
         return true;
+    }
+
+    public function post_list($page)
+    {
+        $model = new PostsModel();
+        $post_query = $model->orderBy("created_at", "desc");
+        $post_list = $model->paginate(10, "default", $page); // (1)
+        $pager = $post_query->pager;
+
+        return [$pager, $post_list];
     }
 
     private static $postService = null; // (10)
