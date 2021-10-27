@@ -56,17 +56,17 @@ class Post extends Controller
     // 수정
     public function edit($post_id)
 	{
-		if (LoginHelper::isLogin() === false) { // (1)
+		if (LoginHelper::isLogin() === false) {
 			return $this->response->redirect("/post");
 		}
 
-		$model = new PostsModel();
-		$post = $model->find($post_id);
+		$postService = PostService::factory();
+		$post = $postService->find($post_id);
 		if (!$post) {
 			return $this->response->redirect("/post");
 		}
 
-		if ($post['author'] !== LoginHelper::memberId()){ // (1)
+		if ($postService->isAuthor($post, LoginHelper::memberId()) === false){
 			return $this->response->redirect("/post");
 		}
 
@@ -76,22 +76,19 @@ class Post extends Controller
 			]);
 		}
 
-		// $isSuccess = $model->update($post_id, $this->request->getPost());
-		$data = $this->add_input_markdown();
-		$isSuccess = $model->update($post_id, $data);
-		
+		list($isSuccess, $errors) = $postService->update($post, $this->request->getPost());
 		if ($isSuccess){
 			$this->response->redirect("/post/show/$post_id");
 		}else{
-			return view("/post/create", [
-				'post_data' => $this->request->getPost(),
-				'errors' => $model->errors()
+			return view("/post/create",[
+				'post_data' => $post,
+				'errors' => $errors
 			]);
 		}
 	}
 
     // 삭제
-public function delete()
+	public function delete()
 	{
 		if (LoginHelper::isLogin() === false) { // (1)
 			return $this->response->redirect("/post");
