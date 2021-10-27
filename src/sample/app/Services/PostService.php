@@ -32,6 +32,14 @@ class PostService  // (1)
         return $post->isAuthor($member_id);
     }
 
+    public function update($post, $new_post_data)
+    {
+        $post->fill($new_post_data); // (1)
+        $postModel = new PostsModel();
+        $isSuccess = $postModel->save($post); // (2)
+        return [$isSuccess, $postModel->errors()];
+    }
+
     private static $postService = null; // (10)
 
     public static function factory() // (11)
