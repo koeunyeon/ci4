@@ -10,6 +10,7 @@ class PostTests extends CIDatabaseTestCase // (2)
     public function setUp() :void // (3)
     {
         parent::setUp(); // (4)
+        $this->postService = PostService::factory(); // (2)
     }
 
     public function tearDown() :void // (5)
