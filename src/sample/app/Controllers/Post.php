@@ -108,18 +108,16 @@ class Post extends Controller
 	}
 
     // 목록
-    public function index($page=1){
-		$model = new PostsModel();
-		$post_query = $model->orderBy("created_at", "desc");
-		$post_list = $model->paginate(10); // (1)
-		$pager = $post_query->pager;
-		$pager->setPath("/post");
+	public function index()
+	{
+		$page = $this->request->getGet("page") ?? 1; // (1)
+		list($pager, $post_list) = PostService::factory()->post_list($page);
 	
 		return view("post/index", [
 			'post_list' => $post_list,
 			'pager' => $pager,
 			'isLogin' => LoginHelper::isLogin()
 		]);
-    }
+	}
 
 }
