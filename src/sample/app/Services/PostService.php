@@ -40,6 +40,24 @@ class PostService  // (1)
         return [$isSuccess, $postModel->errors()];
     }
 
+    public function delete($post_id, $member_id)
+    {        
+        $post = $this->find($post_id);
+
+        if (!$post) {
+            return false;
+        }
+
+        if ($this->isAuthor($post, $member_id) === false) { // (1) 
+            return false;
+        }
+
+        $postModel = new PostsModel();
+        $postModel->delete($post->post_id);
+
+        return true;
+    }
+
     private static $postService = null; // (10)
 
     public static function factory() // (11)
