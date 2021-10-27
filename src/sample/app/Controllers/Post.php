@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Entities\PostEntity;
 use App\helpers\LoginHelper;
 use CodeIgniter\Controller;
 
@@ -30,8 +31,11 @@ class Post extends Controller
 		if ($create_success){
 			return $this->response->redirect("/post/show/$post_id");
 		}
+
+		$postEntity = new PostEntity();
+		$postEntity->fill($this->request->getPost());
 		return view("/post/create", [
-			'post_data' => $this->request->getPost(),
+			'post_data' => $postEntity,
 			'errors' => $errors
 		]);
 	}
