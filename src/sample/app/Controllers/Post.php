@@ -97,23 +97,13 @@ class Post extends Controller
 		if (LoginHelper::isLogin() === false) { // (1)
 			return $this->response->redirect("/post");
 		}
-
+	
 		if ($this->request->getMethod() !== "post"){
 			return $this->response->redirect("/post");
 		}
-
+	
 		$post_id = $this->request->getPost('post_id');
-		$model = new PostsModel();
-		$post = $model->find($post_id);
-		if (!$post) {
-			return $this->response->redirect("/post");
-		}
-
-		if ($post['author'] !== LoginHelper::memberId()){
-			return $this->response->redirect("/post");
-		}
-
-		$model->delete($post_id);
+		PostService::factory()->delete($post_id, LoginHelper::memberId());
 		return $this->response->redirect("/post");
 	}
 
