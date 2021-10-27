@@ -23,6 +23,15 @@ class PostService  // (1)
         return [false, null, $postModel->errors()]; // (9)
     }
 
+    public function find($post_id){
+        $postModel = new PostsModel();
+        return $postModel->asObject("App\Entities\PostEntity")->find($post_id); // (1)
+    }
+
+    public function isAuthor($post, $member_id){ // (1)
+        return $post->isAuthor($member_id);
+    }
+
     private static $postService = null; // (10)
 
     public static function factory() // (11)

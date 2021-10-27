@@ -17,4 +17,8 @@ class PostEntity extends \CodeIgniter\Entity
         $this->attributes['content'] = $content; // (3)
         $this->attributes['html_content'] = $this->to_markdown($content); // (4)
     }
+
+    public function isAuthor($member_id){ // (1)
+        return $this->attributes['author'] == $member_id;
+    }
 }

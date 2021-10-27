@@ -36,20 +36,22 @@ class Post extends Controller
 		]);
 	}
 
-    // 조회
-    public function show($post_id){
-		$model = new PostsModel();
-		$post = $model->find($post_id);
+	// 조회
+	public function show($post_id)
+	{
+		$postService = PostService::factory(); // (1)
+		$post = $postService->find($post_id); // (2)
 		if (!$post) {
 			return $this->response->redirect("/post");
 		}
 
-		$isAuthor = LoginHelper::isLogin() && $post['author'] == LoginHelper::memberId();
+		$isAuthor = $postService->isAuthor($post, LoginHelper::memberId()); // (3)
+
 		return view('/post/show',[
 			'post' => $post,
 			'isAuthor' => $isAuthor
 		]);
-    }   
+	}
 
     // 수정
     public function edit($post_id)
