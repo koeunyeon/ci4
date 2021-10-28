@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Entities\PostEntity;
-use App\helpers\LoginHelper;
+use App\Helpers\LoginHelper;
 use CodeIgniter\Controller;
 
 use App\Models\PostsModel;
