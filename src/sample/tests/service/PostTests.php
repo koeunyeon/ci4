@@ -3,42 +3,42 @@
 namespace service;
 
 use App\Services\PostService;
-use CodeIgniter\Test\CIDatabaseTestCase; // (1)
+use CodeIgniter\Test\CIDatabaseTestCase;
 
-class PostTests extends CIDatabaseTestCase // (2)
+class PostTests extends CIDatabaseTestCase
 {
-    public function setUp() :void // (3)
+    public function setUp() :void
     {
-        parent::setUp(); // (4)
+        parent::setUp();
     }
 
-    public function tearDown() :void // (5)
+    public function tearDown() :void
     {
-        parent::tearDown(); // (6)
+        parent::tearDown();
     }
 
-    public function test_글생성_성공(){ // (7)
-        // given // (8)
-        $post_data = [ // (9)
+    public function test_글생성_성공(){
+        // given 
+        $post_data = [ 
             'title' => '제목입니다.',
             'content' => '본문은 10글자 이상이죠?'
         ];
 
-        $memberId = 1; // (10)
+        $memberId = 1;
 
-        // when // (11)
+        // when
         list($result, $post_id, $errors) = PostService::factory()->create($post_data, $memberId); // (12)
 
-        // then // (13)
-        $this->assertTrue($result); // (14)
-        $this->assertNotNull($post_id); // (15)
-        $this->assertCount(0, $errors); // (16)
+        // then
+        $this->assertTrue($result);
+        $this->assertNotNull($post_id);
+        $this->assertCount(0, $errors);
     }
 
     public function test_글생성_유효성검사()
     {
         // given
-        $post_data = [ // (1)
+        $post_data = [
             'title' => '',
             'content' => ''
         ];
@@ -51,6 +51,6 @@ class PostTests extends CIDatabaseTestCase // (2)
         $this->assertFalse($result);
         $this->assertNull($post_id);
 
-        fwrite(STDERR, print_r($errors, TRUE)); // (2)
+        fwrite(STDERR, print_r($errors, TRUE));
     }
 }
