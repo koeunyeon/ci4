@@ -22,7 +22,7 @@ class Relation extends Migration
         $this->forge->addKey('sample_parent_id', true);
         $this->forge->createTable('sample_parent');
 
-        $this->forge->reset(); // (1)
+        $this->forge->reset();
         $this->forge->addField([
             'sample_child_id'          => [
                 'type'           => 'BIGINT',
@@ -39,7 +39,7 @@ class Relation extends Migration
             ]
         ]);
         $this->forge->addKey('sample_child_id', true);
-        $this->forge->addForeignKey('sample_parent_id', 'sample_parent', 'sample_parent_id'); // (2)
+        $this->forge->addForeignKey('sample_parent_id', 'sample_parent', 'sample_parent_id');
         $this->forge->createTable('sample_child');
 
 
