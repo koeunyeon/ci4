@@ -5,32 +5,32 @@ namespace App\Services;
 use App\Entities\PostEntity;
 use App\Models\PostsModel;
 
-class PostService  // (1)
+class PostService
 {
-    public function create($post_data, $memberId)  // (2)
+    public function create($post_data, $memberId)
     {
-        $postEntity = new PostEntity(); // (3)
-        $postEntity->fill($post_data); // (4)
-        $postEntity->author = $memberId; // (5)
+        $postEntity = new PostEntity();
+        $postEntity->fill($post_data);
+        $postEntity->author = $memberId;
 
-        $postModel = new PostsModel(); // (6)
-        $post_id = $postModel->insert($postEntity); // (7)
+        $postModel = new PostsModel();
+        $post_id = $postModel->insert($postEntity);
 
         if ($post_id) {
-            return [true, $post_id, []]; // (8)
+            return [true, $post_id, []];
         }
 
-        return [false, null, $postModel->errors()]; // (9)
+        return [false, null, $postModel->errors()];
     }
 
-    private static $postService = null; // (10)
+    private static $postService = null;
 
-    public static function factory() // (11)
+    public static function factory()
     {
-        if (self::$postService === null) { // (12)
+        if (self::$postService === null) {
             self::$postService = new PostService();
         }
 
-        return self::$postService; // (13)
+        return self::$postService;
     }
 }
