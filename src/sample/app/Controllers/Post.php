@@ -87,7 +87,7 @@ public function delete()
     public function index($page=1){
 		$model = new PostsModel();
 		$post_query = $model->orderBy("created_at", "desc");
-		$post_list = $model->paginate(10); // (1)
+		$post_list = $model->paginate(10);
 		$pager = $post_query->pager;
 		$pager->setPath("/post");
 	
