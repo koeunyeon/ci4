@@ -8,7 +8,7 @@ class Posts extends Migration
 {
     public function up()
     {
-        $this->forge->dropTable('posts', true); // (1)
+        $this->forge->dropTable('posts', true);
 
         $this->forge->addField([
             'post_id' => [
@@ -25,10 +25,10 @@ class Posts extends Migration
                 'constraint' => '100',
             ],
             'content' => [
-                'type' => 'LONGTEXT' // (2)
+                'type' => 'LONGTEXT'
             ],
             'html_content' => [
-                'type' => 'LONGTEXT'  // (3)
+                'type' => 'LONGTEXT'
             ],
             'created_at' => [
                 'type' => 'VARCHAR',
