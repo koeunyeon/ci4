@@ -4,20 +4,20 @@ namespace App\helpers;
 
 class SessionGlobalHelper
 {
-    public static function start() // (1)
+    public static function start()
     {
-        if (isset($_SESSION) == false) {  // (2)
+        if (isset($_SESSION) == false) {
             session_start();
         }
     }
 
-    public static function set($key, $val) // (3)
+    public static function set($key, $val)
     {
         self::start();
         $_SESSION[$key] = $val;
     }
 
-    public static function get($key, $default = null)  // (4)
+    public static function get($key, $default = null)
     {
         self::start();
         if (isset($_SESSION[$key])) {
@@ -26,7 +26,7 @@ class SessionGlobalHelper
         return $default;
     }
 
-    public static function remove($key) // (5)
+    public static function remove($key)
     {
         self::start();
         if (isset($_SESSION[$key])) {

@@ -25,7 +25,7 @@ class Post extends Controller
     // 생성
     public function create()
 	{
-		if (LoginHelper::isLogin() === false) { // (1)
+		if (LoginHelper::isLogin() === false) {
 			return $this->response->redirect("/post");
 		}
 		
@@ -35,8 +35,8 @@ class Post extends Controller
 		
 		$model = new PostsModel();		
 		// $post_id = $model->insert($this->request->getPost());
-		$data = $this->add_input_markdown(); // (1)
-		$data['author'] = LoginHelper::memberId(); // (2)
+		$data = $this->add_input_markdown();
+		$data['author'] = LoginHelper::memberId();
 		$post_id = $model->insert($data);
 		if ($post_id) {  // 모델에서 유효성 검사를 통과할 경우
 			$this->response->redirect("/post/show/$post_id");
@@ -66,7 +66,7 @@ class Post extends Controller
     // 수정
     public function edit($post_id)
 	{
-		if (LoginHelper::isLogin() === false) { // (1)
+		if (LoginHelper::isLogin() === false) {
 			return $this->response->redirect("/post");
 		}
 
@@ -76,7 +76,7 @@ class Post extends Controller
 			return $this->response->redirect("/post");
 		}
 
-		if ($post['author'] !== LoginHelper::memberId()){ // (1)
+		if ($post['author'] !== LoginHelper::memberId()){
 			return $this->response->redirect("/post");
 		}
 
@@ -103,7 +103,7 @@ class Post extends Controller
     // 삭제
 public function delete()
 	{
-		if (LoginHelper::isLogin() === false) { // (1)
+		if (LoginHelper::isLogin() === false) {
 			return $this->response->redirect("/post");
 		}
 
@@ -130,7 +130,7 @@ public function delete()
     public function index($page=1){
 		$model = new PostsModel();
 		$post_query = $model->orderBy("created_at", "desc");
-		$post_list = $model->paginate(10); // (1)
+		$post_list = $model->paginate(10);
 		$pager = $post_query->pager;
 		$pager->setPath("/post");
 	

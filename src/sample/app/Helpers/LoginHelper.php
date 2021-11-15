@@ -3,14 +3,14 @@ namespace App\helpers;
 
 class LoginHelper
 {
-    public const MEMBER_ID = "member_id"; // (1)
+    public const MEMBER_ID = "member_id";
     
-    public static function isLogin() // (2)
+    public static function isLogin()
     {
-        return SessionGlobalHelper::get(self::MEMBER_ID) !== null; //(3)
+        return SessionGlobalHelper::get(self::MEMBER_ID) !== null;
     }
 
-    public static function memberId(){ // (4)
+    public static function memberId(){
         return SessionGlobalHelper::get(self::MEMBER_ID);
     }
 }
