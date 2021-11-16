@@ -10,8 +10,7 @@ class Rich extends BaseController
 {
     public function create()
     {
-        $richModel = new  RichModel();
-        // (1)
+        $richModel = new  RichModel();        
         $last_insert_id = $richModel->insert([
             'name' => 'rich',
             'age' => 22

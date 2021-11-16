@@ -6,11 +6,11 @@ namespace App\Controllers;
 
 use App\Models\MemberModel;
 use CodeIgniter\Controller;
-use Hybridauth\Provider\Google; // (1)
+use Hybridauth\Provider\Google;
 
 class Oauth extends Controller
 {
-    private function getConfig(){ // (2)
+    private function getConfig(){
         $config = [
             'callback' => 'http://localhost:8080/oauth/google',
             'keys' => [
@@ -22,50 +22,50 @@ class Oauth extends Controller
         return $config;
     }
 
-    public function google() // (3)
+    public function google()
     {
         $adapter = new Google($this->getConfig());
-        $adapter->authenticate(); // (4)
+        $adapter->authenticate();
 
-        if ($adapter->isConnected()){ // (5)            
-            $userProfile = $adapter->getUserProfile(); // (6)
+        if ($adapter->isConnected()){
+            $userProfile = $adapter->getUserProfile();
 
-            $identifier = $userProfile->identifier ?? null; // (7)
-            $displayName = $userProfile->displayName ?? null; // (8)
+            $identifier = $userProfile->identifier ?? null;
+            $displayName = $userProfile->displayName ?? null;
 
             $model = new MemberModel();
-            $exist_data = $model->where([ // (9)
+            $exist_data = $model->where([
                 'identifier'=> $identifier,
                 'social_name' => 'google'
             ])->first();                
 
             $member_id = null;
-            if ($exist_data == null){  // (10)
+            if ($exist_data == null){
                 $member_id = $model->insert([
                     'social_name' => 'google',
                     'identifier' => $identifier,
                     'member_name' => $displayName
                 ]);
             }else{
-                $member_id = $exist_data['member_id'];  // (11)
+                $member_id = $exist_data['member_id'];
             }
 
-            $_SESSION['member_id'] = $member_id;  // (12)
+            $_SESSION['member_id'] = $member_id;
             $this->response->redirect("/post");
 
-        }else{ // (13)
+        }else{
             $this->response->redirect("/post");
         }
     }
 
-    public function logout(){ // (14)
+    public function logout(){
         $adapter = new Google($this->getConfig());
-        $adapter->disconnect(); // (15)
+        $adapter->disconnect();
 
-        if (isset($_SESSION['member_id'])){ // (16)
+        if (isset($_SESSION['member_id'])){
             unset($_SESSION['member_id']);
         }
 
- $this->response->redirect("/post");
+        $this->response->redirect("/post");
     }
 }

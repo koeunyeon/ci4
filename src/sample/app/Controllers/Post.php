@@ -43,13 +43,13 @@ class Post extends Controller
 	// 조회
 	public function show($post_id)
 	{
-		$postService = PostService::factory(); // (1)
-		$post = $postService->find($post_id); // (2)
+		$postService = PostService::factory();
+		$post = $postService->find($post_id);
 		if (!$post) {
 			return $this->response->redirect("/post");
 		}
 
-		$isAuthor = $postService->isAuthor($post, LoginHelper::memberId()); // (3)
+		$isAuthor = $postService->isAuthor($post, LoginHelper::memberId());
 
 		return view('/post/show',[
 			'post' => $post,
@@ -94,7 +94,7 @@ class Post extends Controller
     // 삭제
 	public function delete()
 	{
-		if (LoginHelper::isLogin() === false) { // (1)
+		if (LoginHelper::isLogin() === false) {
 			return $this->response->redirect("/post");
 		}
 	
@@ -110,7 +110,7 @@ class Post extends Controller
     // 목록
 	public function index()
 	{
-		$page = $this->request->getGet("page") ?? 1; // (1)
+		$page = $this->request->getGet("page") ?? 1;
 		list($pager, $post_list) = PostService::factory()->post_list($page);
 	
 		return view("post/index", [

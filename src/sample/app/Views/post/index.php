@@ -3,9 +3,9 @@
 <?php
 function show_content($content)
 {
-    $content = strip_tags($content); // (1)
-    if (mb_strlen($content) > 100) { // (2)
-        $content = mb_substr($content, 0, 100); // (3)
+    $content = strip_tags($content);
+    if (mb_strlen($content) > 100) {
+        $content = mb_substr($content, 0, 100);
     }
     return $content;
 }

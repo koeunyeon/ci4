@@ -6,7 +6,7 @@ class Member extends Migration
 {
    public function up()
    {
-        $this->forge->dropTable('members', true); // (1)
+        $this->forge->dropTable('members', true);
 
         $this->forge->addField([
             'member_id' => [
