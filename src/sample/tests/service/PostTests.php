@@ -3,43 +3,43 @@
 namespace service;
 
 use App\Services\PostService;
-use CodeIgniter\Test\CIDatabaseTestCase; // (1)
+use CodeIgniter\Test\CIDatabaseTestCase;
 
-class PostTests extends CIDatabaseTestCase // (2)
+class PostTests extends CIDatabaseTestCase
 {
-    public function setUp() :void // (3)
+    public function setUp() :void
     {
-        parent::setUp(); // (4)
-        $this->postService = PostService::factory(); // (2)
+        parent::setUp();
+        $this->postService = PostService::factory();
     }
 
-    public function tearDown() :void // (5)
+    public function tearDown() :void
     {
-        parent::tearDown(); // (6)
+        parent::tearDown();
     }
 
-    public function test_글생성_성공(){ // (7)
-        // given // (8)
-        $post_data = [ // (9)
+    public function test_글생성_성공(){
+        // given
+        $post_data = [
             'title' => '제목입니다.',
             'content' => '본문은 10글자 이상이죠?'
         ];
 
-        $memberId = 1; // (10)
+        $memberId = 1;
 
-        // when // (11)
-        list($result, $post_id, $errors) = PostService::factory()->create($post_data, $memberId); // (12)
+        // when
+        list($result, $post_id, $errors) = PostService::factory()->create($post_data, $memberId);
 
-        // then // (13)
-        $this->assertTrue($result); // (14)
-        $this->assertNotNull($post_id); // (15)
-        $this->assertCount(0, $errors); // (16)
+        // then
+        $this->assertTrue($result);
+        $this->assertNotNull($post_id);
+        $this->assertCount(0, $errors);
     }
 
     public function test_글생성_유효성검사()
     {
         // given
-        $post_data = [ // (1)
+        $post_data = [
             'title' => '',
             'content' => ''
         ];
@@ -52,10 +52,10 @@ class PostTests extends CIDatabaseTestCase // (2)
         $this->assertFalse($result);
         $this->assertNull($post_id);
 
-        fwrite(STDERR, print_r($errors, TRUE)); // (2)
+        fwrite(STDERR, print_r($errors, TRUE));
     }
 
-    private function insert_post() // (3)
+    private function insert_post()
     {
         $post_data = [
             'title' => '제목입니다.',
@@ -64,7 +64,7 @@ class PostTests extends CIDatabaseTestCase // (2)
 
         $memberId = 1;
 
-        list($result, $post_id, $errors) = $this->postService->create($post_data, $memberId); // (4)
+        list($result, $post_id, $errors) = $this->postService->create($post_data, $memberId);
         return [$result, $post_id, $errors];
     }
 
@@ -77,12 +77,12 @@ class PostTests extends CIDatabaseTestCase // (2)
         $post_success = $this->postService->find($post_id);
         $post_fail = $this->postService->find(-1);
 
-        // then  // (5)
+        // then
         $this->assertNotNull($post_success);
         $this->assertNull($post_fail);
     }
 
-    private function setup_post(){ // (6)
+    private function setup_post(){
         list($result, $post_id, $errors) = $this->insert_post();
         return $this->postService->find($post_id);
     }
@@ -92,11 +92,11 @@ class PostTests extends CIDatabaseTestCase // (2)
         // given
         $post = $this->setup_post();
 
-        // when  // (7)
+        // when
         $author_true = $post->isAuthor(1);
         $author_false = $post->isAuthor(-1);
 
-        // then  // (8)
+        // then
         $this->assertTrue($author_true);
         $this->assertNotTrue($author_false);
     }
@@ -107,10 +107,10 @@ class PostTests extends CIDatabaseTestCase // (2)
         $post = $this->setup_post();
         $new_post_data = ['title'=> '새로운 제목이에요'];
 
-        // when  // (9)
+        // when
         list($updateSuccess, $errors) = $this->postService->update($post, $new_post_data);
 
-        // then  // (10)
+        // then
         $this->assertTrue($updateSuccess);
 
         $updated_title = $this->postService->find($post->post_id)->title;
@@ -119,14 +119,14 @@ class PostTests extends CIDatabaseTestCase // (2)
 
     public function test_삭제()
     {
-        // given   // (11)
+        // given
         list($result, $post_id, $errors) = $this->insert_post();
 
-        // when   // (12)
+        // when
         $not_deleted = $this->postService->delete($post_id, -1);
         $deleted = $this->postService->delete($post_id, 1);
 
-        // then   // (13)
+        // then
         $this->assertNotTrue($not_deleted);
         $this->assertTrue($deleted);
     }
@@ -134,14 +134,14 @@ class PostTests extends CIDatabaseTestCase // (2)
     public function test_목록()
     {
         // given
-        foreach (range(1,5) as $item) { // (14)
+        foreach (range(1,5) as $item) {
             $this->insert_post();
         }
 
-        // when // (15)
+        // when
         list($pager, $post_list) = $this->postService->post_list(1);
 
-        // then // (16)
+        // then
         $this->assertNotNull($pager);
         $this->assertNotNull($post_list);
         $this->assertCount(5, $post_list);
@@ -154,10 +154,10 @@ class PostTests extends CIDatabaseTestCase // (2)
             $this->insert_post();
         }
 
-        // when // (17)
+        // when
         list($pager, $post_list) = $this->postService->post_list(2);
 
-        // then // (18)
+        // then
         $this->assertCount(0, $post_list);
     }    
 }
