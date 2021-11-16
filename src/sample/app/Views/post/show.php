@@ -13,7 +13,7 @@
 </div><!--//blog-comments-section-->
 <?php if ($isAuthor) : ?>
 <div style="text-align: right;">
-    <form method="POST" action="/post/delete"> <!-- (2) -->
+    <form method="POST" action="/post/delete">
         <a href="/post/edit/<?= $post->post_id ?>" class="btn btn-info">수정</a>
         <input type="hidden" name="post_id" value="<?= $post->post_id?>" />
         <input type="submit" class="btn btn-danger" value="삭제">

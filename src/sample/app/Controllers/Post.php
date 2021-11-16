@@ -39,13 +39,13 @@ class Post extends Controller
 	// 조회
 	public function show($post_id)
 	{
-		$postService = PostService::factory(); // (1)
-		$post = $postService->find($post_id); // (2)
+		$postService = PostService::factory();
+		$post = $postService->find($post_id);
 		if (!$post) {
 			return $this->response->redirect("/post");
 		}
 
-		$isAuthor = $postService->isAuthor($post, LoginHelper::memberId()); // (3)
+		$isAuthor = $postService->isAuthor($post, LoginHelper::memberId());
 
 		return view('/post/show',[
 			'post' => $post,
@@ -56,7 +56,7 @@ class Post extends Controller
     // 수정
     public function edit($post_id)
 	{
-		if (LoginHelper::isLogin() === false) { // (1)
+		if (LoginHelper::isLogin() === false) {
 			return $this->response->redirect("/post");
 		}
 
@@ -66,7 +66,7 @@ class Post extends Controller
 			return $this->response->redirect("/post");
 		}
 
-		if ($post['author'] !== LoginHelper::memberId()){ // (1)
+		if ($post['author'] !== LoginHelper::memberId()){
 			return $this->response->redirect("/post");
 		}
 
@@ -93,7 +93,7 @@ class Post extends Controller
     // 삭제
 public function delete()
 	{
-		if (LoginHelper::isLogin() === false) { // (1)
+		if (LoginHelper::isLogin() === false) {
 			return $this->response->redirect("/post");
 		}
 
@@ -120,7 +120,7 @@ public function delete()
     public function index($page=1){
 		$model = new PostsModel();
 		$post_query = $model->orderBy("created_at", "desc");
-		$post_list = $model->paginate(10); // (1)
+		$post_list = $model->paginate(10);
 		$pager = $post_query->pager;
 		$pager->setPath("/post");
 	

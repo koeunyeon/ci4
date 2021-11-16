@@ -6,19 +6,19 @@ use Michelf\Markdown;
 
 class PostEntity extends \CodeIgniter\Entity
 {
-    private function to_markdown($content) // (1)
+    private function to_markdown($content)
     {
         $content = str_replace(PHP_EOL, "  " . PHP_EOL, $content);
         return Markdown::defaultTransform($content);
     }
 
-    public function setContent($content) // (2)
+    public function setContent($content)
     {
-        $this->attributes['content'] = $content; // (3)
-        $this->attributes['html_content'] = $this->to_markdown($content); // (4)
+        $this->attributes['content'] = $content;
+        $this->attributes['html_content'] = $this->to_markdown($content);
     }
 
-    public function isAuthor($member_id){ // (1)
+    public function isAuthor($member_id){
         return $this->attributes['author'] == $member_id;
     }
 }
